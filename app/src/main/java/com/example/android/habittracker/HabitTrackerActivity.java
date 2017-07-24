@@ -39,6 +39,7 @@ public class HabitTrackerActivity extends AppCompatActivity {
         ContentValues values = new ContentValues();
         values.put(HabitEntry.COLUMN_HABIT_NAME, "Exercise at least 30 min per day");
         values.put(HabitEntry.COLUMN_HABIT_DATE, "24/07/2017");
+        values.put(String.valueOf(HabitEntry.COLUMN_EXERCISE_MINUTES), 70);
         values.put(HabitEntry.COLUMN_HABIT_RESULT, "GOAL ACHIEVED");
 
 
@@ -64,6 +65,7 @@ public class HabitTrackerActivity extends AppCompatActivity {
         String[] projection = {
                 HabitEntry.COLUMN_HABIT_NAME,
                 HabitEntry.COLUMN_HABIT_DATE,
+                String.valueOf(HabitEntry.COLUMN_EXERCISE_MINUTES),
                 HabitEntry.COLUMN_HABIT_RESULT};
 
         // Perform a query on the habits table
@@ -103,11 +105,13 @@ public class HabitTrackerActivity extends AppCompatActivity {
             displayData.append("The Habit Tracker table contains " + cursor.getCount() + " Habits.\n\n");
             displayData.append(HabitEntry.COLUMN_HABIT_NAME + " - " +
                     HabitEntry.COLUMN_HABIT_DATE + "\n" +
+                    HabitEntry.COLUMN_EXERCISE_MINUTES + " - " +
                     HabitEntry.COLUMN_HABIT_RESULT + " - ");
 
             // Figure out the index of each column
             int habitNameColumnIndex = cursor.getColumnIndex(HabitEntry.COLUMN_HABIT_NAME);
             int dateColumnIndex = cursor.getColumnIndex(HabitEntry.COLUMN_HABIT_DATE);
+            int exerciseMinutesColumnIndex = cursor.getColumnIndex(String.valueOf(HabitEntry.COLUMN_EXERCISE_MINUTES));
             int resultColumnIndex = cursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_HABIT_RESULT);
 
             // Iterate through all the returned rows in the cursor
@@ -116,10 +120,12 @@ public class HabitTrackerActivity extends AppCompatActivity {
                 // at the current row the cursor is on.
                 String currentHabitName = cursor.getString(habitNameColumnIndex);
                 String currentDate = cursor.getString(dateColumnIndex);
+                int currentExerciseMinutes = cursor.getInt(exerciseMinutesColumnIndex);
                 String currentResult = cursor.getString(resultColumnIndex);
                 // Display the values from each column of the current row in the cursor
                 displayData.append(("\n" + currentHabitName + " - " +
                         currentDate + " - " +
+                        currentExerciseMinutes + " - " +
                         currentResult));
                 }
             } finally {

@@ -10,7 +10,7 @@ public class HabitContract {
 
     /**
      * Inner class that defines constant values for the Habit Tracker database table.
-     * Each entry in the table represents a single Habit instance.
+     * Each entry in the table represents a single Habit event.
      */
     public static final class HabitEntry implements BaseColumns {
 
@@ -23,6 +23,13 @@ public class HabitContract {
          * Type: TEXT
          */
         public final static String COLUMN_HABIT_NAME ="name";
+
+        /**
+         * Minutes of Exercise for the Habit event.
+         *
+         * Type: INTEGER
+         */
+        public final static int COLUMN_EXERCISE_MINUTES = 0;
 
         /**
          * Date of the Habit event.
@@ -47,5 +54,4 @@ public class HabitContract {
         public static final int RESULT_GOAL_ACHIEVED = 1;
         public static final int RESULT_GOAL_NOT_ACHIEVED = 2;
     }
-
 }

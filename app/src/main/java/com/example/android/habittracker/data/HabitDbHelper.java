@@ -4,11 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import com.example.android.habittracker.data.HabitContract.HabitEntry;
 
     /**
@@ -41,22 +36,12 @@ import com.example.android.habittracker.data.HabitContract.HabitEntry;
         @Override
         public void onCreate(SQLiteDatabase db) {
 
-            // Format the date when the current news was published in that TextView
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
-            SimpleDateFormat dateFormat2 = new SimpleDateFormat("EEEE dd MMMM yyyy", Locale.US);
-            try {
-                Date date = dateFormat.parse(currentDate.getDate());
-
-                String parsedaDate = dateFormat2.format(date);
-                dateView.setText(parsedaDate);
-            } catch (ParseException e) {
-            }
-
             // Create a String that contains the SQL statement to create the Habit Tracker table
             String SQL_CREATE_HABIT_TRACKER_TABLE =  "CREATE TABLE " + HabitEntry.TABLE_NAME + " ("
                     + HabitEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + HabitEntry.COLUMN_HABIT_NAME + " TEXT NOT NULL, "
-                    + HabitEntry.COLUMN_HABIT_DATE + " TEXT NOT NULL DEFAULT, "+dateFormat2+""
+                    + HabitEntry.COLUMN_HABIT_DATE + " TEXT NOT NULL, "
+                    + HabitEntry.COLUMN_EXERCISE_MINUTES + " INTEGER NOT NULL DEFAULT 0 "
                     + HabitEntry.COLUMN_HABIT_RESULT + " TEXT NOT NULL, );";
 
             // Execute the SQL statement

@@ -5,10 +5,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
-import com.example.android.habittracker.data.HabitContract;
 import com.example.android.habittracker.data.HabitContract.HabitEntry;
 import com.example.android.habittracker.data.HabitDbHelper;
+
+import static com.example.android.habittracker.data.HabitContract.HabitEntry.COLUMN_HABIT_NAME;
 
 public class HabitTrackerActivity extends AppCompatActivity {
 
@@ -25,6 +27,7 @@ public class HabitTrackerActivity extends AppCompatActivity {
         // To access our database, we instantiate our subclass of SQLiteOpenHelper
         // and pass the context, which is the current activity.
         habitDbHelper = new HabitDbHelper(this);
+        insertHabit();
     }
 
     /**
@@ -37,11 +40,10 @@ public class HabitTrackerActivity extends AppCompatActivity {
         // Create a ContentValues object where column names are the keys,
         // and the Strings are the values.
         ContentValues values = new ContentValues();
-        values.put(HabitEntry.COLUMN_HABIT_NAME, "Exercise at least 30 min per day");
+        values.put(COLUMN_HABIT_NAME, "Exercise at least 30 min per day");
         values.put(HabitEntry.COLUMN_HABIT_DATE, "24/07/2017");
-        values.put(String.valueOf(HabitEntry.COLUMN_EXERCISE_MINUTES), 70);
+        values.put(HabitEntry.COLUMN_EXERCISE_MINUTES, 70);
         values.put(HabitEntry.COLUMN_HABIT_RESULT, "GOAL ACHIEVED");
-
 
         // Insert a new row for a new habit in the database, returning the ID of that new row.
         // The first argument for db.insert() is the Habit Tracker table name.
@@ -51,6 +53,8 @@ public class HabitTrackerActivity extends AppCompatActivity {
         // there are no values).
         // The third argument is the ContentValues object containing the info for the new habit.
         long newRowId = db.insert(HabitEntry.TABLE_NAME, null, values);
+        Log.i("newRowId is - ", String.valueOf(newRowId));
+        readData();
     }
 
     /**
@@ -63,9 +67,9 @@ public class HabitTrackerActivity extends AppCompatActivity {
         // Define a projection that specifies which columns from the database
         // will actually be used after this query.
         String[] projection = {
-                HabitEntry.COLUMN_HABIT_NAME,
+                COLUMN_HABIT_NAME,
                 HabitEntry.COLUMN_HABIT_DATE,
-                String.valueOf(HabitEntry.COLUMN_EXERCISE_MINUTES),
+                HabitEntry.COLUMN_EXERCISE_MINUTES,
                 HabitEntry.COLUMN_HABIT_RESULT};
 
         // Perform a query on the habits table
@@ -80,7 +84,6 @@ public class HabitTrackerActivity extends AppCompatActivity {
 
         //Return the cursor that was created from the above query
         return cursor;
-
     }
 
     /**
@@ -103,16 +106,19 @@ public class HabitTrackerActivity extends AppCompatActivity {
             // In the while loop below, iterate through the rows of the cursor and display
             // the information from each column in this order.
             displayData.append("The Habit Tracker table contains " + cursor.getCount() + " Habits.\n\n");
-            displayData.append(HabitEntry.COLUMN_HABIT_NAME + " - " +
+            displayData.append(COLUMN_HABIT_NAME + " - " +
                     HabitEntry.COLUMN_HABIT_DATE + "\n" +
                     HabitEntry.COLUMN_EXERCISE_MINUTES + " - " +
                     HabitEntry.COLUMN_HABIT_RESULT + " - ");
+                    System.out.print(displayData);
 
             // Figure out the index of each column
-            int habitNameColumnIndex = cursor.getColumnIndex(HabitEntry.COLUMN_HABIT_NAME);
+            int habitNameColumnIndex = cursor.getColumnIndex(COLUMN_HABIT_NAME);
             int dateColumnIndex = cursor.getColumnIndex(HabitEntry.COLUMN_HABIT_DATE);
-            int exerciseMinutesColumnIndex = cursor.getColumnIndex(String.valueOf(HabitEntry.COLUMN_EXERCISE_MINUTES));
-            int resultColumnIndex = cursor.getColumnIndex(HabitContract.HabitEntry.COLUMN_HABIT_RESULT);
+            int exerciseMinutesColumnIndex = cursor.getColumnIndex(HabitEntry.COLUMN_EXERCISE_MINUTES);
+            int resultColumnIndex = cursor.getColumnIndex(HabitEntry.COLUMN_HABIT_RESULT);
+
+            cursor.moveToFirst();
 
             // Iterate through all the returned rows in the cursor
             while (cursor.moveToNext()) {
@@ -127,14 +133,16 @@ public class HabitTrackerActivity extends AppCompatActivity {
                         currentDate + " - " +
                         currentExerciseMinutes + " - " +
                         currentResult));
-                }
-            } finally {
-                // Always close the cursor when you're done reading from it. This releases all its
-                // resources and makes it invalid.
-                cursor.close();
             }
+        } finally {
+            // Always close the cursor when you're done reading from it. This releases all its
+            // resources and makes it invalid.
+            cursor.close();
         }
+    }
 }
+
+
 
 
 

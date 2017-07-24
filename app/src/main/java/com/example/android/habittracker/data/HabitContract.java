@@ -27,9 +27,9 @@ public class HabitContract {
         /**
          * Minutes of Exercise for the Habit event.
          *
-         * Type: INTEGER
+         * Type: TEXT
          */
-        public final static int COLUMN_EXERCISE_MINUTES = 0;
+        public final static String COLUMN_EXERCISE_MINUTES = "minutes";
 
         /**
          * Date of the Habit event.

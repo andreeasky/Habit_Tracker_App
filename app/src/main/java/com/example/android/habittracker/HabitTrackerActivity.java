@@ -19,6 +19,8 @@ public class HabitTrackerActivity extends AppCompatActivity {
      */
     private HabitDbHelper habitDbHelper;
 
+    public static final String LOG_TAG = HabitDbHelper.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,7 +131,12 @@ public class HabitTrackerActivity extends AppCompatActivity {
                 int currentExerciseMinutes = cursor.getInt(exerciseMinutesColumnIndex);
                 String currentResult = cursor.getString(resultColumnIndex);
                 // Display the values from each column of the current row in the cursor
+                displayData.append(("\n" + currentHabitName + " - " +
+                        currentDate + " - " +
+                        currentExerciseMinutes + " - " +
+                        currentResult));
                 System.out.print(displayData);
+                Log.e(LOG_TAG,"The Habit Tracker table contains " + displayData + " Habits.\n\n");
             }
         } finally {
             // Always close the cursor when you're done reading from it. This releases all its

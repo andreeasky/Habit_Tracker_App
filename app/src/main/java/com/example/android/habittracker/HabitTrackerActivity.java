@@ -14,12 +14,11 @@ import static com.example.android.habittracker.data.HabitContract.HabitEntry.COL
 
 public class HabitTrackerActivity extends AppCompatActivity {
 
+    public static final String LOG_TAG = HabitDbHelper.class.getSimpleName();
     /**
      * Database helper that will provide us access to the database
      */
     private HabitDbHelper habitDbHelper;
-
-    public static final String LOG_TAG = HabitDbHelper.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +111,6 @@ public class HabitTrackerActivity extends AppCompatActivity {
                     HabitEntry.COLUMN_HABIT_DATE + "\n" +
                     HabitEntry.COLUMN_EXERCISE_MINUTES + " - " +
                     HabitEntry.COLUMN_HABIT_RESULT + " - ");
-                    System.out.print(displayData);
 
             // Figure out the index of each column
             int habitNameColumnIndex = cursor.getColumnIndex(COLUMN_HABIT_NAME);
@@ -131,13 +129,14 @@ public class HabitTrackerActivity extends AppCompatActivity {
                 int currentExerciseMinutes = cursor.getInt(exerciseMinutesColumnIndex);
                 String currentResult = cursor.getString(resultColumnIndex);
                 // Display the values from each column of the current row in the cursor
-                displayData.append(("\n" + currentHabitName + " - " +
+                displayData.append(( "\n" + currentHabitName + " - " +
                         currentDate + " - " +
                         currentExerciseMinutes + " - " +
-                        currentResult));
+                        currentResult ));
                 System.out.print(displayData);
-                Log.e(LOG_TAG,"The Habit Tracker table contains " + displayData + " Habits.\n\n");
             }
+            Log.i(LOG_TAG, "The Habit Tracker table contains " + displayData + " Habits.\n\n");
+
         } finally {
             // Always close the cursor when you're done reading from it. This releases all its
             // resources and makes it invalid.

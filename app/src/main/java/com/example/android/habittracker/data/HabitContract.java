@@ -46,12 +46,5 @@ public class HabitContract {
          * Type: TEXT
          */
         public final static String COLUMN_HABIT_RESULT = "result";
-
-        /**
-         * Possible values for the Result of the Habit event.
-         */
-        public static final int RESULT_UNKNOWN = 0;
-        public static final int RESULT_GOAL_ACHIEVED = 1;
-        public static final int RESULT_GOAL_NOT_ACHIEVED = 2;
     }
 }

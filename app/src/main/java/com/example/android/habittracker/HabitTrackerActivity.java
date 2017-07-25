@@ -67,7 +67,7 @@ public class HabitTrackerActivity extends AppCompatActivity {
         // Define a projection that specifies which columns from the database
         // will actually be used after this query.
         String[] projection = {
-                COLUMN_HABIT_NAME,
+                HabitEntry.COLUMN_HABIT_NAME,
                 HabitEntry.COLUMN_HABIT_DATE,
                 HabitEntry.COLUMN_EXERCISE_MINUTES,
                 HabitEntry.COLUMN_HABIT_RESULT};
@@ -129,10 +129,7 @@ public class HabitTrackerActivity extends AppCompatActivity {
                 int currentExerciseMinutes = cursor.getInt(exerciseMinutesColumnIndex);
                 String currentResult = cursor.getString(resultColumnIndex);
                 // Display the values from each column of the current row in the cursor
-                displayData.append(("\n" + currentHabitName + " - " +
-                        currentDate + " - " +
-                        currentExerciseMinutes + " - " +
-                        currentResult));
+                System.out.print(displayData);
             }
         } finally {
             // Always close the cursor when you're done reading from it. This releases all its

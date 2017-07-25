@@ -41,7 +41,7 @@ import com.example.android.habittracker.data.HabitContract.HabitEntry;
                     + HabitEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + HabitEntry.COLUMN_HABIT_NAME + " TEXT NOT NULL, "
                     + HabitEntry.COLUMN_HABIT_DATE + " TEXT NOT NULL, "
-                    + HabitEntry.COLUMN_EXERCISE_MINUTES + " TEXT NOT NULL, "
+                    + HabitEntry.COLUMN_EXERCISE_MINUTES + " INTEGER NOT NULL DEFAULT 0, "
                     + HabitEntry.COLUMN_HABIT_RESULT + " TEXT NOT NULL );";
 
             // Execute the SQL statement
